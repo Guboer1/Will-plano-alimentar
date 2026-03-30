@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Rotina Diária - Wilton Roberto</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --g-deep:#0D1F17;--g-dark:#1B4332;--g-mid:#2D6A4F;--g-accent:#40916C;
+    --g-light:#52B788;--g-glow:#95D5B2;--or:#F4A261;--red:#E76F51;
+    --w:#fff;--w80:rgba(255,255,255,0.8);--w60:rgba(255,255,255,0.6);
+    --w30:rgba(255,255,255,0.3);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--g-deep);font-family:'Barlow',sans-serif;color:var(--w);-webkit-tap-highlight-color:transparent;}
+  .hero{background:linear-gradient(160deg,#0D1F17 0%,#1B4332 50%,#2D6A4F 100%);padding:40px 20px 28px;text-align:center;position:relative;overflow:hidden;}
+  .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:50px;background:linear-gradient(transparent,var(--g-deep));}
+  .hero h1{font-family:'Bebas Neue';font-size:2.6rem;letter-spacing:4px;color:var(--g-glow);line-height:1;}
+  .hero .sub{font-family:'Barlow Condensed';font-size:0.82rem;font-weight:500;color:var(--g-light);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+  .stats{display:flex;justify-content:center;gap:10px;margin-top:16px;flex-wrap:wrap;position:relative;z-index:1;}
+  .stat{background:rgba(255,255,255,0.05);border:1px solid rgba(82,183,136,0.2);border-radius:10px;padding:8px 16px;min-width:70px;text-align:center;}
+  .stat .v{font-family:'Bebas Neue';font-size:1.4rem;color:var(--g-glow);line-height:1.1;}
+  .stat .l{font-size:0.58rem;letter-spacing:1px;color:var(--w60);text-transform:uppercase;}
+
+  /* Water */
+  .water-wrap{margin:12px 20px 0;padding:10px 14px;border-radius:12px;background:rgba(82,183,136,0.06);border:1px solid rgba(82,183,136,0.12);position:relative;z-index:1;}
+  .water-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+  .water-header span{font-size:0.78rem;color:var(--g-glow);font-weight:600;}
+  .water-bar{height:7px;border-radius:7px;background:rgba(255,255,255,0.06);overflow:hidden;}
+  .water-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,#5BA3D9,#7BC8F6);transition:width 0.4s;}
+  .water-btns{display:flex;gap:6px;margin-top:6px;}
+  .water-btn{flex:1;padding:5px;border-radius:8px;border:1px solid rgba(91,163,217,0.3);background:rgba(91,163,217,0.08);color:#7BC8F6;font-size:0.7rem;font-weight:600;cursor:pointer;text-align:center;}
+
+  /* Progress */
+  .progress-wrap{padding:10px 20px 0;position:relative;z-index:1;}
+  .progress-bar{background:rgba(255,255,255,0.06);border-radius:20px;height:7px;overflow:hidden;margin-top:4px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--g-light),var(--g-glow));border-radius:20px;transition:width 0.5s;width:0%;}
+  .progress-label{font-size:0.66rem;color:var(--w30);text-align:center;margin-top:3px;}
+
+  .container{max-width:600px;margin:0 auto;padding:0 16px 30px;}
+  .sec-title{font-family:'Bebas Neue';font-size:1.3rem;letter-spacing:3px;color:var(--g-glow);text-align:center;margin:20px 0 10px;}
+  .sec-title::after{content:'';display:block;width:35px;height:2px;margin:3px auto 0;background:var(--g-light);border-radius:1px;}
+
+  /* Premissas */
+  .prem-list{display:flex;flex-direction:column;gap:7px;}
+  .prem-item{display:flex;gap:8px;align-items:flex-start;background:rgba(82,183,136,0.05);border:1px solid rgba(82,183,136,0.1);border-radius:10px;padding:9px 11px;}
+  .prem-item .pi{font-size:1.1rem;flex-shrink:0;}
+  .prem-item .pt{font-size:0.73rem;color:var(--w80);line-height:1.4;}
+  .prem-item .pt strong{color:var(--g-glow);}
+
+  /* Timeline */
+  .timeline{position:relative;padding:8px 0 0 30px;}
+  .timeline::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--g-light),var(--g-mid),var(--g-dark));}
+  .card{position:relative;margin-bottom:10px;background:rgba(82,183,136,0.04);border:1px solid rgba(82,183,136,0.1);border-radius:12px;padding:12px 12px 10px;transition:all 0.3s;}
+  .card.done{opacity:0.4;}
+  .card::before{content:'';position:absolute;left:-26px;top:14px;width:9px;height:9px;border-radius:50%;background:var(--g-light);box-shadow:0 0 6px rgba(82,183,136,0.3);}
+  .card::after{content:'';position:absolute;left:0;top:5px;bottom:5px;width:3px;background:var(--g-light);border-radius:2px;}
+  .card.wo{background:rgba(244,162,97,0.05);border-color:rgba(244,162,97,0.15);}
+  .card.wo::before{background:var(--or);box-shadow:0 0 6px rgba(244,162,97,0.3);}
+  .card.wo::after{background:var(--or);}
+  .card-head{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+  .card-head .emoji{font-size:1rem;}
+  .card-head .title{font-family:'Barlow Condensed';font-weight:700;font-size:0.85rem;color:var(--g-glow);text-transform:uppercase;letter-spacing:1px;flex:1;}
+  .card.wo .card-head .title{color:var(--or);}
+  .check-btn{width:24px;height:24px;border-radius:50%;border:2px solid var(--g-mid);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+  .check-btn.checked{background:var(--g-light);border-color:var(--g-light);}
+  .check-btn.checked::after{content:'✓';color:var(--g-deep);font-size:13px;font-weight:700;}
+  .card.wo .check-btn.checked{background:var(--or);border-color:var(--or);}
+  .card ul{list-style:none;padding:0;}
+  .card ul li{padding:2px 0;font-size:0.78rem;color:var(--w80);padding-left:13px;position:relative;line-height:1.4;}
+  .card ul li::before{content:'▸';position:absolute;left:0;color:var(--g-light);font-weight:700;}
+  .card.wo ul li::before{color:var(--or);}
+  .or-divider{text-align:center;font-size:0.7rem;font-weight:700;color:var(--or);padding:4px 0;letter-spacing:1px;}
+  .tag{display:inline-block;margin-top:5px;padding:2px 9px;border-radius:10px;font-size:0.68rem;font-weight:600;}
+  .tag.green{background:rgba(82,183,136,0.12);border:1px solid rgba(82,183,136,0.2);color:var(--g-glow);}
+  .alert-box{margin-top:5px;padding:4px 9px;border-radius:6px;background:rgba(231,111,81,0.08);border:1px solid rgba(231,111,81,0.18);font-size:0.68rem;color:var(--red);line-height:1.35;}
+
+  /* Workout accordion */
+  .wo-toggle{display:flex;align-items:center;gap:5px;margin-top:6px;padding:5px 10px;border-radius:8px;border:1px solid rgba(244,162,97,0.2);background:rgba(244,162,97,0.06);cursor:pointer;width:100%;font-family:'Barlow Condensed';font-weight:700;font-size:0.78rem;color:var(--or);text-transform:uppercase;letter-spacing:1px;}
+  .wo-toggle .arrow{transition:transform 0.3s;font-size:0.65rem;}
+  .wo-toggle.open .arrow{transform:rotate(90deg);}
+  .wo-detail{display:none;margin-top:6px;padding:8px 10px;background:rgba(0,0,0,0.2);border:1px solid rgba(244,162,97,0.1);border-radius:10px;}
+  .wo-detail.show{display:block;}
+  .wo-detail h5{font-family:'Barlow Condensed';font-weight:700;font-size:0.8rem;color:var(--or);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;}
+  .wo-detail .muscle{font-size:0.62rem;color:var(--w30);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;}
+  .wo-detail ul{list-style:none;padding:0;margin-bottom:8px;}
+  .wo-detail ul:last-child{margin-bottom:0;}
+  .wo-detail ul li{padding:2px 0;font-size:0.73rem;color:var(--w60);line-height:1.35;border-bottom:1px solid rgba(255,255,255,0.03);}
+  .wo-detail ul li:last-child{border-bottom:none;}
+  .wo-detail ul li strong{color:var(--w80);font-weight:600;}
+
+  .meta-banner{background:rgba(82,183,136,0.08);border:2px solid var(--g-mid);border-radius:14px;padding:16px;text-align:center;margin:18px 0;}
+  .meta-banner h3{font-family:'Bebas Neue';font-size:1.4rem;letter-spacing:2px;color:var(--g-glow);}
+  .meta-banner p{font-size:0.75rem;color:var(--w60);margin-top:3px;}
+  .reset-btn{display:block;margin:8px auto 20px;padding:7px 22px;border-radius:18px;background:transparent;border:1px solid var(--g-mid);color:var(--g-light);font-family:'Barlow Condensed';font-size:0.78rem;font-weight:600;letter-spacing:1px;cursor:pointer;text-transform:uppercase;}
+  .footer{text-align:center;padding:8px 0 30px;font-size:0.62rem;color:rgba(255,255,255,0.2);}
+  .res-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+  .res-chip{padding:4px 10px;border-radius:7px;font-size:0.68rem;font-weight:600;}
+  .res-chip.green{background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);color:var(--g-glow);}
+  .res-chip.red{background:rgba(231,111,81,0.08);border:1px solid rgba(231,111,81,0.18);color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>ROTINA DIÁRIA</h1>
+  <div class="sub">Wilton Roberto · Nutri: Daniel Sgarbi</div>
+  <div class="stats">
+    <div class="stat"><div class="v">78kg</div><div class="l">Peso</div></div>
+    <div class="stat"><div class="v">30/05</div><div class="l">Próx. Pesagem</div></div>
+  </div>
+</div>
+
+<!-- Water -->
+<div class="water-wrap">
+  <div class="water-header">
+    <span>💧 Água: <span id="waterCount">0</span></span>
+    <span style="font-size:0.65rem;color:var(--w30);" id="waterMl">Meta: 3-3,5L</span>
+  </div>
+  <div class="water-bar"><div class="water-fill" id="waterFill" style="width:0%"></div></div>
+  <div class="water-btns">
+    <button class="water-btn" onclick="addWater(300)">+300ml</button>
+    <button class="water-btn" onclick="addWater(500)">+500ml</button>
+    <button class="water-btn" onclick="addWater(-300)">-300ml</button>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel">0/5 concluído</div>
+</div>
+
+<div class="container">
+
+  <div class="sec-title">PREMISSAS</div>
+  <div class="prem-list">
+    <div class="prem-item"><span class="pi">🥩</span><div class="pt"><strong>Proteínas magras</strong> em todas as refeições. Distribuir ao longo do dia pra otimizar síntese muscular.</div></div>
+    <div class="prem-item"><span class="pi">🍠</span><div class="pt"><strong>Carbos complexos:</strong> grãos integrais, aveia, batata-doce, quinoa, legumes. Energia gradual + saciedade.</div></div>
+    <div class="prem-item"><span class="pi">🥦</span><div class="pt"><strong>Vegetais e fibras</strong> em todas as refeições. Gorduras saudáveis em porções moderadas.</div></div>
+    <div class="prem-item"><span class="pi">💧</span><div class="pt"><strong>Água:</strong> 3-3,5L/dia (300-350ml/hora). Sem líquido durante refeições — 30 min antes ou depois.</div></div>
+    <div class="prem-item"><span class="pi">🐄</span><div class="pt"><strong>Carne vermelha:</strong> 3x/sem no almoço. Cortes magros (patinho, acém, alcatra, filé mignon). 150g. Moído: 6 col. servir.</div></div>
+    <div class="prem-item"><span class="pi">🫘</span><div class="pt"><strong>Feijão:</strong> Máx 2x/sem, 1 concha cheia = 70g.</div></div>
+  </div>
+
+  <div class="res-row">
+    <div class="res-chip green">💧 3-3,5L água/dia</div>
+    <div class="res-chip red">🚫 Refri (nem zero)</div>
+    <div class="res-chip red">🚫 Sal/açúcar adição</div>
+  </div>
+
+  <div class="sec-title">PASSO A PASSO DO DIA</div>
+  <p style="text-align:center;font-size:0.68rem;color:var(--w30);margin-bottom:8px;">Toque no ✓ para marcar</p>
+
+  <div class="timeline">
+
+    <!-- Café -->
+    <div class="card" data-id="0">
+      <div class="card-head">
+        <span class="emoji">🍳</span>
+        <span class="title">Café da Manhã</span>
+        <button class="check-btn" onclick="toggle(this)"></button>
+      </div>
+      <ul>
+        <li>1 fatia pão integral (&lt;60mg sódio) <strong>OU</strong> 3 col. sopa (45g) tapioca</li>
+        <li>1 col. sopa (15g) cottage light <strong>OU</strong> ricota light</li>
+        <li>3 ovos (1 inteiro + 2 claras) <strong>OU</strong> 2 fatias grandes queijo branco (100g, minas frescal)</li>
+        <li>1 fruta: meio mamão <strong>OU</strong> 1 maçã <strong>OU</strong> 6 morangos <strong>OU</strong> 1 mexerica</li>
+      </ul>
+      <div class="alert-box">Sem líquido durante · Sem refri · Sem sal/açúcar adição</div>
+    </div>
+
+    <!-- Almoço -->
+    <div class="card" data-id="1">
+      <div class="card-head">
+        <span class="emoji">🍽️</span>
+        <span class="title">Almoço</span>
+        <button class="check-btn" onclick="toggle(this)"></button>
+      </div>
+      <ul>
+        <li><strong>Carbo:</strong> 75g mandioca (3 col. servir) <strong>OU</strong> 75g batata-doce <strong>OU</strong> 75g arroz branco</li>
+        <li><strong>Proteína:</strong> 150g frango (2 bifes médios) <strong>OU</strong> 150g tilápia</li>
+        <li><strong>Salada à vontade:</strong> alface, tomate, cenoura, cebola, rúcula, agrião (½ limão + 1 col. sopa azeite)</li>
+        <li><strong>Legumes:</strong> 60g brócolis + 60g beterraba + 60g abóbora (4 col. sopa cada)</li>
+        <li><strong>Sobremesa:</strong> 4 rodelas abacaxi <strong>OU</strong> 1 mexerica <strong>OU</strong> 100g melancia <strong>OU</strong> 100g melão</li>
+      </ul>
+      <div class="alert-box">Carne vermelha 3x/sem (150g, cortes magros). Moído: 6 col. servir. Feijão máx 2x/sem (70g).</div>
+    </div>
+
+    <!-- Lanche -->
+    <div class="card" data-id="2">
+      <div class="card-head">
+        <span class="emoji">🥪</span>
+        <span class="title">Lanche da Tarde</span>
+        <button class="check-btn" onclick="toggle(this)"></button>
+      </div>
+      <ul>
+        <li><strong>Opção A:</strong> Pão sírio + cottage (15g) + 75g frango desfiado (1 bife médio) + 1 iogurte grego</li>
+      </ul>
+      <div class="or-divider">— OU —</div>
+      <ul>
+        <li><strong>Opção B:</strong> 1 dose whey <strong>OU</strong> 1 iogurte proteico (mín. 20g prot.) + chia ou linhaça (30g) + 5-6 castanhas</li>
+      </ul>
+      <div class="or-divider">— OU —</div>
+      <ul>
+        <li><strong>Opção C:</strong> 1 dose whey + farinha de aveia integral (30g) + granola zero (15g) + 3 castanhas</li>
+      </ul>
+    </div>
+
+    <!-- Treino -->
+    <div class="card wo" data-id="3">
+      <div class="card-head">
+        <span class="emoji">🏋️</span>
+        <span class="title">Treino ABC — Resistência/Hipertrofia</span>
+        <button class="check-btn" onclick="toggle(this)"></button>
+      </div>
+      <ul>
+        <li>Descanso 1–1,5min entre séries · Sem cardio dia perna</li>
+        <li>Dias off: cardio + abdominal</li>
+      </ul>
+
+      <button class="wo-toggle" onclick="toggleWo('woA',this)"><span class="arrow">▸</span> Treino A — Peito/Ombro/Tríceps</button>
+      <div class="wo-detail" id="woA">
+        <h5>Treino A</h5>
+        <div class="muscle">Peito, Ombro, Tríceps, Abdominal + Cardio 15min</div>
+        <ul>
+          <li><strong>Supino reto máquina</strong> — 4× 15/15/12/12</li>
+          <li><strong>Cross over</strong> — 4× 10/10/8/8</li>
+          <li><strong>Supino inclinado halteres</strong> — 4× 15/15/12/12</li>
+          <li><strong>Elevação lateral</strong> — 5× 20/15/15/12/12</li>
+          <li><strong>Elevação frontal halteres (supinada)</strong> — 3× 15/15/12</li>
+          <li><strong>Tríceps corda</strong> — 4× 20/15/15/12</li>
+          <li><strong>Tríceps testa barra W (banco inclinado)</strong> — 3× 12/12/10</li>
+          <li><strong>Abdominal supra</strong> (máquina/colchonete) — 5× 15-20</li>
+          <li><strong>Prancha abdominal</strong> — 5× 30s-1min</li>
+          <li><strong>Cardio pós treino</strong> — 15min (bike/elíptico/esteira inclinada)</li>
+        </ul>
+      </div>
+
+      <button class="wo-toggle" onclick="toggleWo('woB',this)"><span class="arrow">▸</span> Treino B — Perna Completa</button>
+      <div class="wo-detail" id="woB">
+        <h5>Treino B</h5>
+        <div class="muscle">Perna Completa e Abdominal</div>
+        <ul>
+          <li><strong>Cadeira adutora</strong> — 4× 20/20/15/15</li>
+          <li><strong>Hack linear ou agachamento Smith</strong> — 5× 20/15/15/12/12</li>
+          <li><strong>Cadeira extensora unilateral</strong> — 4× 15/15/15/12</li>
+          <li><strong>Leg press 45°</strong> — 4× 20/20/15/15</li>
+          <li><strong>Cadeira flexora</strong> — 4× 15/15/12/12</li>
+          <li><strong>Panturrilha gêmeos</strong> — 5× 20</li>
+          <li><strong>Abdominal oblíquo</strong> (colchonete) — 5× 15-20</li>
+          <li><strong>Prancha abdominal</strong> — 5× 30s-1min</li>
+        </ul>
+      </div>
+
+      <button class="wo-toggle" onclick="toggleWo('woC',this)"><span class="arrow">▸</span> Treino C — Costas/Bíceps</button>
+      <div class="wo-detail" id="woC">
+        <h5>Treino C</h5>
+        <div class="muscle">Costas, Posterior Ombro, Bíceps, Abdominal + Cardio</div>
+        <ul>
+          <li><strong>Pulley costas (pegada frontal)</strong> — 4× 20/20/15/15</li>
+          <li><strong>Remada curvada (pegada supinada)</strong> — 4× 15/15/12/12</li>
+          <li><strong>Remada máquina fechada</strong> — 4× 15/15/12/12</li>
+          <li><strong>Elevação post. ombro (banco c/ halteres)</strong> — 4× 20/20/15/15</li>
+          <li><strong>Encolhimento ombro (Smith ou halteres)</strong> — 3× 20</li>
+          <li><strong>Rosca alternada sentado</strong> — 4× 20/15/15/12</li>
+          <li><strong>Rosca martelo Scott unilateral</strong> — 3× 12/12/10</li>
+          <li><strong>Abdominal infra</strong> (bosu/colchonete) — 5× 15-20</li>
+          <li><strong>Prancha abdominal</strong> — 5× 30s-1min</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jantar -->
+    <div class="card" data-id="4">
+      <div class="card-head">
+        <span class="emoji">🥗</span>
+        <span class="title">Jantar</span>
+        <button class="check-btn" onclick="toggle(this)"></button>
+      </div>
+      <ul>
+        <li><strong>Carbo:</strong> 75g mandioca <strong>OU</strong> 75g batata-doce <strong>OU</strong> 75g arroz branco</li>
+        <li><strong>Proteína:</strong> 150g frango <strong>OU</strong> 150g tilápia <strong>OU</strong> 1 lata atum sólido</li>
+        <li><strong>Salada à vontade:</strong> alface, tomate, cenoura, cebola, rúcula, agrião (½ limão + 1 col. sopa azeite)</li>
+        <li><strong>Legumes:</strong> 60g brócolis + 60g beterraba + 60g abóbora (4 col. sopa cada)</li>
+      </ul>
+      <div class="alert-box">Sem líquido durante · Sem refri · Sem sal/açúcar adição</div>
+    </div>
+
+  </div>
+
+  <div class="meta-banner">
+    <h3>🎯 Próxima Pesagem: 30/05/2026</h3>
+    <p>Nutri: Daniel Sgarbi · @danielsgarbinutri · CRN-3 88906</p>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">↻ Resetar dia</button>
+  <div class="footer">Nutricionista: Daniel Sgarbi · (11) 97766-8985 · CRN-3 88906</div>
+</div>
+
+<script>
+const TOTAL=5;
+const getToday=()=>new Date().toISOString().slice(0,10);
+function getState(){try{const r=localStorage.getItem('wilton_rotina');if(!r)return{date:getToday(),checks:{},water:0};const s=JSON.parse(r);if(s.date!==getToday())return{date:getToday(),checks:{},water:0};return s;}catch{return{date:getToday(),checks:{},water:0};}}
+function saveState(s){try{localStorage.setItem('wilton_rotina',JSON.stringify(s))}catch{}}
+function updateProgress(){
+  const s=getState();
+  const done=Object.values(s.checks).filter(Boolean).length;
+  document.getElementById('progressFill').style.width=Math.round((done/TOTAL)*100)+'%';
+  document.getElementById('progressLabel').textContent=done+'/'+TOTAL+' concluído';
+  document.querySelectorAll('.card[data-id]').forEach(c=>{
+    const btn=c.querySelector('.check-btn');
+    if(btn){if(s.checks[c.dataset.id]){btn.classList.add('checked');c.classList.add('done');}else{btn.classList.remove('checked');c.classList.remove('done');}}
+  });
+  document.getElementById('waterCount').textContent=(s.water/1000).toFixed(1)+'L';
+  document.getElementById('waterFill').style.width=Math.min(100,(s.water/3250)*100)+'%';
+}
+function toggle(btn){const c=btn.closest('.card');const s=getState();s.checks[c.dataset.id]=!s.checks[c.dataset.id];saveState(s);updateProgress();}
+function addWater(ml){const s=getState();s.water=Math.max(0,s.water+ml);saveState(s);updateProgress();}
+function resetAll(){saveState({date:getToday(),checks:{},water:0});updateProgress();}
+function toggleWo(id,btn){document.getElementById(id).classList.toggle('show');btn.classList.toggle('open');}
+updateProgress();
+</script>
+</body>
+</html>
